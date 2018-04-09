@@ -19,7 +19,7 @@ conv_base <- application_vgg16(
 
 ######## extract freatures ######################################
 
-train_dir <- file.path("downloads")
+train_dir <- file.path("training")
 #validation_dir <- file.path(base_dir, "validation")
 #test_dir <- file.path(base_dir, "test")
 
