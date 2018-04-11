@@ -66,14 +66,14 @@ extract_features = function(directory, sample_count) {
 
 train = extract_features(
   directory = train_dir, 
-  sample_count = 200
+  sample_count = 300
 )
 
 table(train$labels)
 
 validation = extract_features(
   directory = validation_dir, 
-  sample_count = 80
+  sample_count = 100
 )
 
 table(validation$labels)
