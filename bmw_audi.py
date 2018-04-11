@@ -1,26 +1,41 @@
 from google_images_download import google_images_download 
-
 response = google_images_download.googleimagesdownload()  
+
+# download images into tmp folder, we need to sort out
+# right car pictures later and split into training and validation
+
+# 100 png, jpg and bmp files
 
 arguments = {
   "keywords": "BMW,AUDI",
   "limit": 100,
-  "print_urls": True,
-  "size": "medium",
-  "output_directory": "training",
-   "format": "gif"
+  "print_urls": False,
+  "suffix_keywords": "car",
+  "output_directory": "TMP",
+   "format": "png"
 }
 
-response.download(arguments)   #passing the arguments to the function
+response.download(arguments)   
 
 arguments = {
   "keywords": "BMW,AUDI",
-  "limit": 50,
-  "print_urls": True,
-  "size": "medium",
-  "output_directory": "validation",
+  "limit": 100,
+  "print_urls": False,
+  "suffix_keywords": "car",
+  "output_directory": "TMP",
   "format": "jpg"
-  
 }
 
-response.download(arguments)   #passing the arguments to the function
+response.download(arguments)   
+
+arguments = {
+  "keywords": "BMW,AUDI",
+  "limit": 100,
+  "print_urls": False,
+  "suffix_keywords": "car",
+  "output_directory": "TMP",
+  "format": "bmp"
+}
+
+
+response.download(arguments)  
