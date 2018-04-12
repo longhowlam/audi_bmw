@@ -185,10 +185,10 @@ model %>% compile(
 
 history <- model %>% fit_generator(
   train_generator,
-  steps_per_epoch = 100,
-  epochs = 30,
+  steps_per_epoch = 80,
+  epochs = 15,
   validation_data = validation_generator,
-  validation_steps = 50
+  validation_steps = 40
 )
 
-
+plot(history)
