@@ -73,7 +73,7 @@ table(train$labels)
 
 validation = extract_features(
   directory = validation_dir, 
-  sample_count = 100
+  sample_count = 80
 )
 
 table(validation$labels)
