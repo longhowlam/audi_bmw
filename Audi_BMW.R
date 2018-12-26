@@ -1,5 +1,3 @@
-library(keras)
-
 ######## Introduction #########################################################
 
 ## train an AUDI BMW classifier based on images that were downloaded using the 
@@ -7,8 +5,10 @@ library(keras)
 ## where downloaded were not usable by keras
 
 ## Do the fast and easy way, create features from a pretrained network
-## and use thos features in a dense network
+## and use those features in a dense network
 
+library(keras)
+library(ggplot2)
 ######## conv base to create feutures #########################################
 
 conv_base = application_vgg16(
@@ -17,11 +17,10 @@ conv_base = application_vgg16(
   input_shape = c(150, 150, 3)
 )
 
-
 ######## extract freatures ######################################
 
-train_dir      = file.path("training")
-validation_dir = file.path("validation")
+train_dir      = file.path("cars/train")
+validation_dir = file.path("cars/val")
 
 
 datagen = image_data_generator(rescale = 1/255)
@@ -64,10 +63,16 @@ extract_features = function(directory, sample_count) {
   )
 }
 
+t0 = proc.time()
 train = extract_features(
   directory = train_dir, 
   sample_count = 300
 )
+t1 = proc.time()
+t1-t0
+
+# op GCP 3.4 seconden
+# op laptop CPU: 37.148 sec
 
 table(train$labels)
 
@@ -109,7 +114,7 @@ model %>% compile(
   metrics = c("accuracy")
 )
 
-history <- model %>% 
+history_featureExtraction <- model %>% 
   fit(
     train$features,
     train$labels,
@@ -118,7 +123,10 @@ history <- model %>%
     validation_data = list(validation$features, validation$labels)
 )
 
-plot(history)
+#### op GCP duurt een epoch 194us
+#### op laptop cpu 1000us, 1ms
+
+plot(history_featureExtraction) + labs(title = "model op feature extraction")
 
 ### not a high accuracy
 
@@ -183,7 +191,7 @@ model %>% compile(
   metrics = c("accuracy")
 )
 
-history <- model %>% fit_generator(
+history_transferlearning <- model %>% fit_generator(
   train_generator,
   steps_per_epoch = 80,
   epochs = 15,
@@ -191,4 +199,6 @@ history <- model %>% fit_generator(
   validation_steps = 40
 )
 
-plot(history)
+plot(history_transferlearning)
+
+#### op GCP tesla V100 duurt een epoch 22 seconden
